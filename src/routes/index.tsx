@@ -1,24 +1,29 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-// import { createInterceptors } from 'api/createInterceptors.ts';
 import Dashboard from '../pages/Dashboard';
 import RoutesPaths from '../types';
-import { useAuthContext } from '../contexts';
 import { useState } from 'react';
-import GlobalStyle from '../assets/GlobalStyle';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline } from '@mui/material';
 import { AppBar, Sidebar } from '../components';
 import Despesas from '../pages/Despesas';
+import Login from '../pages/Login';
+import GlobalStyle from '../assets/GlobalStyle';
+import { useAuthContext } from '../contexts';
 
-export default () => {
+export default function AppRoutes() {
   const accessToken = useAuthContext().acessToken;
   const [open, setOpen] = useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-  
+  const toggleDrawer = () => setOpen(!open);
+
   if (!accessToken) {
-    return <Navigate to={RoutesPaths.login} replace />;
+    return (
+      <ThemeProvider theme={GlobalStyle}>
+        <Routes>
+          <Route path={RoutesPaths.login} element={<Login />} />
+          <Route path="*" element={<Navigate to={RoutesPaths.login} replace />} />
+        </Routes>
+      </ThemeProvider>
+    );
   }
 
   return (
@@ -26,15 +31,13 @@ export default () => {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar open={open} toggleDrawer={toggleDrawer} />
-
         <Sidebar open={open} toggleDrawer={toggleDrawer} />
-
         <Routes>
           <Route path={RoutesPaths.dashboard} element={<Dashboard />} />
           <Route path={RoutesPaths.despesas} element={<Despesas />} />
+          <Route path="*" element={<Navigate to={RoutesPaths.dashboard} replace />} />
         </Routes>
       </Box>
     </ThemeProvider>
   );
-};
-
+}

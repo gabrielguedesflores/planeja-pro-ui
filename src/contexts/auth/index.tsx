@@ -4,7 +4,7 @@ import { Despesa, User } from '../../types';
 export interface AuthContextType {
   getUser: (userId: string) => void;
   user: User[] | null;
-  acessToken: string;
+  acessToken: any;
 }
 
 export const GlobalAuthContext = (): AuthContextType => {
@@ -28,7 +28,7 @@ export const GlobalAuthContext = (): AuthContextType => {
     }
   }
 
-  const acessToken = '123';
+  const acessToken = false;
 
   return {
     getUser,

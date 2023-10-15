@@ -21,4 +21,5 @@ export default class RoutesPaths {
   static dashboard = '/dashboard';
   static despesas = '/despesas';
   static login = '/login';
+  static cadastro = '/cadastro';
 }
