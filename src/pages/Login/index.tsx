@@ -2,9 +2,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -18,32 +15,35 @@ import { Container, ContainerLogin } from './styles';
 import StringUtils from '../../utils/StringUtils';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import SaveIcon from '@mui/icons-material/Save';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import { useAuthContext } from '../../contexts';
+import { useNavigate } from 'react-router-dom';
+import RoutesPaths from '../../types';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { login } = useAuthContext();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
-  const onSubmit = async () => {
     setIsLoading(true);
-    // const isLogged = await login({ username, password, cooperative });
-    // if (isLogged) navigate('/');
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const isLogged = await login({ userEmail: email, userPassword: password });
       
-    }, 5000);
-  };
+      if (isLogged) {
+        navigate(RoutesPaths.dashboard);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+};
 
   return (
     <ThemeProvider theme={GlobalStyle}>
@@ -58,7 +58,7 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Login
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1 }}>
 
               <Input
                 label='E-mail'
@@ -94,7 +94,7 @@ export default function Login() {
               ) : (
                 <Button
                   data-testid='login-btn'
-                  onClick={onSubmit}
+                  onClick={async (event: any) => await onSubmit(event)}
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
