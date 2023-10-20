@@ -14,7 +14,7 @@ export interface InputProps {
   help?: string;
 }
 
-const Input = ({
+const InputLogin = ({
   fullWidth,
   loading,
   errorMsg,
@@ -39,4 +39,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default InputLogin;

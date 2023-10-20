@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
@@ -10,12 +9,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
 import GlobalStyle from '../../assets/GlobalStyle';
-import { Copyright, Input, InputPassword } from '../../components';
+import { ButtonLogin, Copyright, InputLogin, InputPassword } from '../../components';
 import { Container, ContainerLogin } from './styles';
 import StringUtils from '../../utils/StringUtils';
 import { useState } from 'react';
-import LoadingButton from '@mui/lab/LoadingButton';
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import { useAuthContext } from '../../contexts';
 import { useNavigate } from 'react-router-dom';
 import RoutesPaths from '../../types';
@@ -32,7 +29,7 @@ export default function Login() {
     setIsLoading(true);
     try {
       const isLogged = await login({ userEmail: email, userPassword: password });
-      
+
       if (isLogged) {
         navigate(RoutesPaths.dashboard);
         setIsLoading(false);
@@ -43,7 +40,7 @@ export default function Login() {
       console.log(error);
     }
 
-};
+  };
 
   return (
     <ThemeProvider theme={GlobalStyle}>
@@ -60,10 +57,10 @@ export default function Login() {
             </Typography>
             <Box sx={{ mt: 1 }}>
 
-              <Input
+              <InputLogin
                 label='E-mail'
                 value={email}
-                onChange={(e) => {
+                onChange={(e: any) => {
                   setEmail(e.target.value);
                   // handleEmail(e.target.value);
                 }}
@@ -83,27 +80,18 @@ export default function Login() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               />
 
-              {isLoading ? (
-                <LoadingButton
-                  loading
-                  loadingPosition="start"
-                  startIcon={<HourglassBottomIcon />}
-                >
-                  Carregando...
-                </LoadingButton>
-              ) : (
-                <Button
-                  data-testid='login-btn'
-                  onClick={async (event: any) => await onSubmit(event)}
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  disabled={!email || !password}
-                >
-                  Entrar
-                </Button>
-
-              )}
+              <ButtonLogin
+                type='button'
+                data-testid='login-btn'
+                fullWidth
+                loading={isLoading}
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                disabled={!email || !password}
+                onClick={async (event: any) => await onSubmit(event)}
+              >
+                Entrar
+              </ButtonLogin>
 
               <Grid container>
                 <Grid item sm={12} md={12}>

@@ -1,37 +1,15 @@
-
-import { styled } from '@mui/material/styles';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-
-const drawerWidth: number = 240;
+import { NavBar } from './styles';
+import Profile from '../Profile';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
   toggleDrawer?: () => void;
 }
-
-const NavBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
 
 export default function AppBar({ open, toggleDrawer }: AppBarProps) {
 
@@ -39,7 +17,7 @@ export default function AppBar({ open, toggleDrawer }: AppBarProps) {
     <NavBar position="absolute" open={open}>
       <Toolbar
         sx={{
-          pr: '24px', // keep right padding when drawer closed
+          pr: '24px',
         }}
       >
         <IconButton
@@ -63,11 +41,9 @@ export default function AppBar({ open, toggleDrawer }: AppBarProps) {
         >
           Dashboard
         </Typography>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+
+        {/* <ButtonSwitchTheme /> */}
+        <Profile />
       </Toolbar>
     </NavBar>
   );

@@ -1,5 +1,5 @@
-import { Box, Container, Grid, Paper, Toolbar } from "@mui/material";
-import { Copyright } from "../../components";
+import { Box, Container, Grid, Toolbar } from "@mui/material";
+import { Breadcrumb, Copyright, FiltroDespesa, NovaDespesa, TabelaDespesa } from "../../components";
 
 export default function Despesas() {
   return (
@@ -18,38 +18,30 @@ export default function Despesas() {
       <Toolbar />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
-          {/* Chart */}
-          <Grid item xs={12} md={8} lg={9}>
-            <Paper
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-              }}
-            >
-              {/* <Chart /> */}despesas
-            </Paper>
-          </Grid>
-          {/* Recent Deposits */}
-          <Grid item xs={12} md={4} lg={3}>
-            <Paper
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-              }}
-            >
-              {/* <Deposits /> */}Deposits
-            </Paper>
-          </Grid>
-          {/* Recent Orders */}
+
           <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              {/* <Orders /> */}Orders
-            </Paper>
+            <Grid container spacing={3}>
+              <Grid item xs={10}>
+                <Breadcrumb />
+              </Grid>
+              <Grid item xs={2}>
+                <NovaDespesa />
+              </Grid>
+            </Grid>
           </Grid>
+
+          <Grid item xs={12} md={8} lg={9}>
+            <FiltroDespesa />
+          </Grid>
+
+          <Grid item xs={12} md={4} lg={3}>
+            Grid Total
+          </Grid>
+
+          <Grid item xs={12}>
+            <TabelaDespesa />
+          </Grid>
+
         </Grid>
         <Copyright sx={{ pt: 4 }} />
       </Container>

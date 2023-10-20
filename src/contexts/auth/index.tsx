@@ -1,8 +1,11 @@
 import { Login } from '../../types';
 import { Endpoints, axiosInstance } from '../../api';
 import jwt from 'jwt-decode';
+import { useState } from 'react';
 
 export interface AuthContextType {
+  token: string | null;
+  setToken: (token: string | null) => void;
   getSession: () => any;
   getUser: (userId: string, token: string) => any;
   logout: () => any;
@@ -10,7 +13,6 @@ export interface AuthContextType {
 }
 
 export const GlobalAuthContext = (): AuthContextType => {
-
   const getSession = (): any => {
     let session = {
       user: null,
@@ -26,6 +28,8 @@ export const GlobalAuthContext = (): AuthContextType => {
 
     return session;
   };
+  
+  const [token, setToken] = useState<string | null>(getSession().accessToken);
 
   const getUser = async (userId: string, token: string) => {
     try {
@@ -76,13 +80,12 @@ export const GlobalAuthContext = (): AuthContextType => {
 
       const parsedToken: any = jwt(data.access_token);
       const user = await getUser(parsedToken.sub, data.access_token);
-      
       const session = {
         user,
         accessToken: data.access_token,
       };
-
       window.sessionStorage.setItem('session', JSON.stringify(session));
+      setToken(data.access_token); 
       return true;
     } catch (error) {
       console.log(error);
@@ -91,6 +94,8 @@ export const GlobalAuthContext = (): AuthContextType => {
   };
 
   return {
+    token,
+    setToken,
     getSession,
     getUser,
     logout,

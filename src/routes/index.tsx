@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
 import RoutesPaths from '../types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline } from '@mui/material';
 import { AppBar, Sidebar } from '../components';
@@ -11,15 +11,10 @@ import GlobalStyle from '../assets/GlobalStyle';
 import { useAuthContext } from '../contexts';
 
 export default function AppRoutes() {
-  const { getSession } = useAuthContext();
-  const [token, setToken] = useState(getSession().accessToken);
+  const { token } = useAuthContext();
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => setOpen(!open);
 
-  useEffect(() => {
-    setToken(getSession().accessToken);
-  }, [getSession]);
-  
   if (!token) {
     return (
       <ThemeProvider theme={GlobalStyle}>

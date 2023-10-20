@@ -3,6 +3,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MuiDrawer from '@mui/material/Drawer';
 import MainListItems, { secondaryListItems } from '../../routes/listItems';
 import { Divider, IconButton, Toolbar, styled } from '@mui/material';
+import { Fonts } from '../../assets/theme';
 
 interface AppBarProps {
   open?: boolean;
@@ -15,6 +16,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
       position: 'relative',
+      fontFamily: Fonts.font_family,
       whiteSpace: 'nowrap',
       width: drawerWidth,
       transition: theme.transitions.create('width', {

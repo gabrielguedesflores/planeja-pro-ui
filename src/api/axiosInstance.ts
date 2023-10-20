@@ -7,7 +7,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(config => {
   const session = JSON.parse(window.sessionStorage.getItem('session') || '{}');
-  
   if (session && session.accessToken) {
     config.headers.Authorization = `Bearer ${session.accessToken}`;
   }
@@ -18,7 +17,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error?.response?.status === 401) {
-      console.log('logout'); // TODO: Implemente o logout de forma adequada (redirecionar para login)
+      console.log('logout'); // TODO: Melhorar processo de logout
     }
     return Promise.reject(error);
   },

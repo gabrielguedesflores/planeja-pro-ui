@@ -9,7 +9,7 @@ import GlobalContextProvider from './contexts';
 import { createTheme } from '@mui/material';
 import { Global } from '@emotion/react';
 
-const defaultTheme = createTheme();
+export const defaultTheme = createTheme();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>
