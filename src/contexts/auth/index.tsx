@@ -43,6 +43,7 @@ export const GlobalAuthContext = (): AuthContextType => {
       );
   
       return {
+        id: data._id,
         name: data.userName,
         email: data.userEmail,
         role: data.role,

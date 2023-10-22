@@ -62,7 +62,6 @@ export default function Login() {
                 value={email}
                 onChange={(e: any) => {
                   setEmail(e.target.value);
-                  // handleEmail(e.target.value);
                 }}
                 name='email'
                 error={!StringUtils.validation.validateEmail(email)}

@@ -5,7 +5,6 @@ import ButtonLogin from "./ButtonLogin";
 import ButtonSwitchTheme from "./ButtonSwitchTheme";
 import Copyright from "./Copyright";
 import FiltroDespesa from "./Despesa/FiltroDespesa";
-import NovaDespesa from "./Despesa/NovaDespesa";
 import TabelaDespesa from "./Despesa/TabelaDespesa";
 import ErrorComponent from "./ErrorComponent";
 import InputLogin from "./InputLogin";
@@ -28,6 +27,5 @@ export {
   InputPassword,
   InputTag,
   FiltroDespesa, 
-  NovaDespesa,
   TabelaDespesa
 }

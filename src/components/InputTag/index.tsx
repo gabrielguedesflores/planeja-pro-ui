@@ -5,6 +5,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
 
+interface InputTagProps {
+  styles?: React.CSSProperties;
+}
+
 const Root = styled('div')(
   ({ theme }) => `
   color: ${
@@ -154,7 +158,7 @@ const Listbox = styled('ul')(
 `,
 );
 
-export default function InputTag() {
+export default function InputTag({ styles }: InputTagProps) {
   const {
     getRootProps,
     getInputLabelProps,
@@ -165,7 +169,7 @@ export default function InputTag() {
     groupedOptions,
     value,
     focused,
-    setAnchorEl,
+    setAnchorEl
   } = useAutocomplete({
     id: 'customized-hook-demo',
     defaultValue: [],
@@ -175,10 +179,10 @@ export default function InputTag() {
   });
 
   return (
-    <Root>
+    <Root style={styles}>
       <div {...getRootProps()}>
         <Label {...getInputLabelProps()}>Tags</Label>
-        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
+        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''} style={styles}>
           {value.map((option: FilmOptionType, index: number) => (
             <StyledTag label={option.title} {...getTagProps({ index })} />
           ))}

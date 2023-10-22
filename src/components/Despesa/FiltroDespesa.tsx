@@ -19,6 +19,12 @@ export default function FiltroDespesa() {
 
   return (
     <Paper
+      style={{
+        padding: '16px',
+        marginBottom: '24px',
+        border: `1px solid ${Colors.primary}`,
+        borderRadius: '8px'
+      }}
       sx={{
         p: 2,
         display: 'flex',
@@ -42,7 +48,9 @@ export default function FiltroDespesa() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <InputTag />
+          <InputTag 
+            styles={{ marginTop: '-5px' }} 
+          />
         </Grid>
 
         <Grid item xs={12} sm={6}>

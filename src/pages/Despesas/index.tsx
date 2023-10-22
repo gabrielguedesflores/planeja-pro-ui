@@ -1,7 +1,38 @@
-import { Box, Container, Grid, Toolbar } from "@mui/material";
-import { Breadcrumb, Copyright, FiltroDespesa, NovaDespesa, TabelaDespesa } from "../../components";
+import { Box, Container, Grid, Paper, Toolbar } from "@mui/material";
+import { Breadcrumb, Copyright, Button, TabelaDespesa } from "../../components";
+import { Colors } from "../../assets/theme";
+import { useEffect } from "react";
+import { useDespesaContext } from "../../contexts";
 
 export default function Despesas() {
+  const { getDespesas, despesas } = useDespesaContext();
+  if (!despesas) getDespesas();
+  console.log('[Despesas]', despesas);
+
+  useEffect(() => {
+    if (!despesas) getDespesas();
+  }, [despesas]);
+
+  const firstSection = () => {
+    return (
+      <Grid item xs={12}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={false} sm={6} md={8}>
+            <Breadcrumb />
+          </Grid>
+          <Grid item container xs={12} sm={6} md={4} justifyContent="flex-end" spacing={2}>
+            <Grid item xs={6} sm={5} md={6}>
+              <Button text="Tags" buttonColor={Colors.primary} variant="contained" fullWidth />
+            </Grid>
+            <Grid item xs={6} sm={7} md={6}>
+              <Button text="Adicionar" buttonColor={Colors.primary} variant="contained" fullWidth />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  };
+
   return (
     <Box
       component="main"
@@ -18,28 +49,31 @@ export default function Despesas() {
       <Toolbar />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
+          {firstSection()}
 
-          <Grid item xs={12}>
-            <Grid container spacing={3}>
-              <Grid item xs={10}>
-                <Breadcrumb />
-              </Grid>
-              <Grid item xs={2}>
-                <NovaDespesa />
-              </Grid>
+          {[1, 2, 3].map((item, index) => (
+            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+              <Paper
+                style={{
+                  padding: '16px',
+                  marginBottom: '24px',
+                  border: `1px solid ${Colors.primary}`,
+                  borderRadius: '8px'
+                }}
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 100,
+                }}
+              >
+                Valor Total das Despesas <br /> R$ 4.534,87
+              </Paper>
             </Grid>
-          </Grid>
-
-          <Grid item xs={12} md={8} lg={9}>
-            <FiltroDespesa />
-          </Grid>
-
-          <Grid item xs={12} md={4} lg={3}>
-            Grid Total
-          </Grid>
+          ))}
 
           <Grid item xs={12}>
-            <TabelaDespesa />
+            <TabelaDespesa despesas={despesas} />
           </Grid>
 
         </Grid>

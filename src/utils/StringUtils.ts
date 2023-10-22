@@ -35,6 +35,12 @@ class FormatUtils {
     return parsedNumber;
   }
 
+  static formatDate(isoString: string): string {
+    const date = new Date(isoString);
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+  }
+  
+
   static stringWODiacritics(str: string) {
     const normalized = str.normalize('NFD').replace(/[-':"_/\{}[]()]/g, ' ');
 

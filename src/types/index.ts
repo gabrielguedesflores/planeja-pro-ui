@@ -1,10 +1,11 @@
 export interface Despesa {
-  id: string,
+  _id: string,
   userId: string,
   description: string,
   amount: number,
   date: string,
-  tags?: []
+  tags?: [],
+  _class?: string
 };
 
 export interface User {
