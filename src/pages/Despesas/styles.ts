@@ -9,3 +9,8 @@ export const BoxContainer = styled(Box)`
   height: '100vh',
   overflow: 'auto',
 `;
+
+export const Line = styled.div`
+  display: flex;
+  align-items: center;
+`;

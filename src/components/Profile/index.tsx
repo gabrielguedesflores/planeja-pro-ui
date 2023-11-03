@@ -18,7 +18,7 @@ export default function Profile() {
     <div>
       <IconButton color="inherit" onClick={handleMenuOpen}>
         <Badge color="secondary">
-          <AccountCircle />
+          <AccountCircle fontSize="large" />
         </Badge>
       </IconButton>
       <Menu

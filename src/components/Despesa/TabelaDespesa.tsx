@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow, IconButton, Menu, MenuItem, Badge, TextField } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow, IconButton, Menu, MenuItem, Badge, TextField, CircularProgress } from "@mui/material";
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import LabelIcon from '@mui/icons-material/Label';
 import SortIcon from '@mui/icons-material/Sort';
@@ -11,6 +11,7 @@ export default function TabelaDespesa(despesas: any) {
   console.log('[TabelaDespesa]', despesas);
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuType, setMenuType] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [dateRange, setDateRange] = useState<{ start: string, end: string }>({ start: "", end: "" });
   const [filtersApplied, setFiltersApplied] = useState({
     date: false,
@@ -27,15 +28,16 @@ export default function TabelaDespesa(despesas: any) {
     setAnchorEl(null);
   };
 
-  const currentMonth = new Date().getMonth();
+  const currentMonth = new Date().getMonth() + 1;
   const currentYear = new Date().getFullYear();
   let isDateFilterApplied = dateRange.start && dateRange.end;
-
+  console.log('currentMonth', currentMonth);
+  
   const filteredDespesas = isDateFilterApplied
     ? despesas.despesas?.filter((despesa: any) => new Date(despesa.date) >= new Date(dateRange.start) && new Date(despesa.date) <= new Date(dateRange.end))
     : despesas.despesas?.filter((despesa: any) => {
       const despesaDate = new Date(despesa.date);
-      return despesaDate.getMonth() === currentMonth && despesaDate.getFullYear() === currentYear;
+      return despesaDate.getMonth() === (currentMonth - 1) && despesaDate.getFullYear() === currentYear;
     });
 
   useEffect(() => {
@@ -45,6 +47,13 @@ export default function TabelaDespesa(despesas: any) {
       setFiltersApplied(prev => ({ ...prev, date: false }));
     }
   }, [isDateFilterApplied]);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [despesas]);
 
   console.log('[filteredDespesas]', filteredDespesas);
   return (
@@ -103,36 +112,44 @@ export default function TabelaDespesa(despesas: any) {
         </Menu>
       </div>
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Descrição</TableCell>
-            <TableCell>Valor</TableCell>
-            <TableCell>Data</TableCell>
-            <TableCell>Tags</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {filteredDespesas && filteredDespesas.length > 0 ? filteredDespesas.map((despesa: any) => (
-            <TableRow key={despesa._id}>
-              <TableCell>{despesa.description}</TableCell>
-              <TableCell>R$ {despesa.amount}</TableCell>
-              <TableCell>{StringUtils.format.formatDate(despesa.date)}</TableCell>
-              <TableCell>{despesa.tags.join(', ')}</TableCell>
-              <TableCell>
-                <IconButton aria-label="delete" size="large">
-                  <EditIcon fontSize="inherit" />
-                </IconButton>
-                <IconButton aria-label="delete" size="large">
-                  <DeleteIcon fontSize="inherit" />
-                </IconButton>
-              </TableCell>
+      {loading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '' }}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Descrição</TableCell>
+              <TableCell>Valor</TableCell>
+              <TableCell>Data</TableCell>
+              <TableCell>Tags</TableCell>
+              <TableCell>Recorrência</TableCell>
+              <TableCell></TableCell>
             </TableRow>
-          )) : null}
-        </TableBody>
-      </Table>
+          </TableHead>
+
+          <TableBody>
+            {filteredDespesas && filteredDespesas.length > 0 ? filteredDespesas.map((despesa: any) => (
+              <TableRow key={despesa._id}>
+                <TableCell>{despesa.description}</TableCell>
+                <TableCell>R$ {despesa.amount}</TableCell>
+                <TableCell>{StringUtils.format.formatDate(despesa.date)}</TableCell>
+                <TableCell>{despesa.tags.join(', ')}</TableCell>
+                <TableCell>{despesa.recurrence ? 'Sim' : 'Não'}</TableCell>
+                <TableCell>
+                  <IconButton aria-label="delete" size="large">
+                    <EditIcon fontSize="inherit" />
+                  </IconButton>
+                  <IconButton aria-label="delete" size="large">
+                    <DeleteIcon fontSize="inherit" />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            )) : null}
+          </TableBody>
+        </Table>
+      )}
     </Paper>
   );
 }

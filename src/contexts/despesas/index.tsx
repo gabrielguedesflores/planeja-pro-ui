@@ -6,6 +6,7 @@ export interface DespesaContextType {
   getDespesas: () => Promise<void>;
   deleteDespesa: (despesaId: string) => Promise<void>;
   updateDespesa: (despesaId: string, updatedDespesa: Despesa) => Promise<void>;
+  getTags: (despesas: Despesa[]) => string[] | unknown[];
   despesas: Despesa[] | null;
 }
 
@@ -19,12 +20,6 @@ export const GlobalDespesasContext = (): DespesaContextType => {
     console.log('[useAuthContext]', session);
   }
 
-  const accessToken = '6520e7081f2025b1828c482e';
-
-  const authHeaders = {
-    Authorization: `Bearer ${accessToken}`
-  };
-
   useEffect(() => {
     const localDespesas = window.sessionStorage.getItem('despesas');
     if (localDespesas) {
@@ -35,8 +30,7 @@ export const GlobalDespesasContext = (): DespesaContextType => {
   const getDespesas = async () => {
     try {
       const { data } = await axiosInstance.get(
-        Endpoints.expense.get(session.user.id),
-        { headers: authHeaders }
+        Endpoints.expense.get(session.user.id)
       );
       setDespesas(data);
       window.sessionStorage.setItem('despesas', JSON.stringify(data));
@@ -45,11 +39,12 @@ export const GlobalDespesasContext = (): DespesaContextType => {
     }
   };
 
+  const createDespesa = () => {};
+
   const deleteDespesa = async (despesaId: string) => {
     try {
       await axiosInstance.delete(
-        `${Endpoints.expense.delete}/${despesaId}`,
-        { headers: authHeaders }
+        `${Endpoints.expense.delete}/${despesaId}`
       );
       setDespesas(prev => prev ? prev.filter(despesa => despesa._id !== despesaId) : null);
     } catch (error) {
@@ -62,7 +57,6 @@ export const GlobalDespesasContext = (): DespesaContextType => {
       await axiosInstance.put(
         `${Endpoints.expense.update}/${despesaId}`,
         updatedDespesa,
-        { headers: authHeaders }
       );
       await getDespesas();
     } catch (error) {
@@ -70,10 +64,22 @@ export const GlobalDespesasContext = (): DespesaContextType => {
     }
   };
 
+  const getTags = (despesas: Despesa[]) => { 
+    // if (!despesas) getDespesas();
+    if (!despesas) {
+      return [];
+    }
+    return Array.from(despesas.reduce((acc, despesa) => {
+      (despesa?.tags || []).forEach(tag => acc.add(tag));
+      return acc;
+    }, new Set()));
+  };
+  
   return {
     getDespesas,
     deleteDespesa,
     updateDespesa,
+    getTags,
     despesas,
   };
 };

@@ -1,16 +1,24 @@
 import { Box, Container, Grid, Paper, Toolbar } from "@mui/material";
 import { Breadcrumb, Copyright, Button, TabelaDespesa } from "../../components";
 import { Colors } from "../../assets/theme";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDespesaContext } from "../../contexts";
+import ModalCriacao from "./ModalCriacao";
 
 export default function Despesas() {
-  const { getDespesas, despesas } = useDespesaContext();
-  if (!despesas) getDespesas();
+  const { getDespesas, despesas, getTags } = useDespesaContext();
+  const [open, setOpen] = useState(false);
+  const [tags, setTags] = useState<any>(getTags(despesas!));
+  const handleOpen = () => setOpen(true);
   console.log('[Despesas]', despesas);
+  console.log('[tags]', tags);
 
   useEffect(() => {
-    if (!despesas) getDespesas();
+    getDespesas();
+  }, []);
+
+  useEffect(() => {
+    setTags(getTags(despesas!));
   }, [despesas]);
 
   const firstSection = () => {
@@ -21,11 +29,14 @@ export default function Despesas() {
             <Breadcrumb />
           </Grid>
           <Grid item container xs={12} sm={6} md={4} justifyContent="flex-end" spacing={2}>
-            <Grid item xs={6} sm={5} md={6}>
-              <Button text="Tags" buttonColor={Colors.primary} variant="contained" fullWidth />
-            </Grid>
             <Grid item xs={6} sm={7} md={6}>
-              <Button text="Adicionar" buttonColor={Colors.primary} variant="contained" fullWidth />
+              <Button
+                text="Adicionar"
+                buttonColor={Colors.primary}
+                variant="contained"
+                fullWidth
+                onClick={handleOpen}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -75,6 +86,8 @@ export default function Despesas() {
           <Grid item xs={12}>
             <TabelaDespesa despesas={despesas} />
           </Grid>
+
+          <ModalCriacao open={open} setOpen={setOpen} despesas={despesas!} />
 
         </Grid>
         <Copyright sx={{ pt: 4 }} />

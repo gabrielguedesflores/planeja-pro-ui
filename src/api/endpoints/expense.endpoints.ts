@@ -8,12 +8,16 @@ export class ExpenseEndpoints extends AbstractEndpoints {
     return `${this.getURL()}/user/${id}`;
   }
 
-  update(id: any) {
-    return `${this.getURL()}/user/${id}`;
+  post() {
+    return `${this.getURL()}`;
   }
 
-  delete(id: any) {
-    return `${this.getURL()}/user/${id}`;
+  update(expense: any) {
+    return `${this.getURL()}/${expense}`;
+  }
+
+  delete(expense: any) {
+    return `${this.getURL()}/${expense}`;
   }
 
 }
