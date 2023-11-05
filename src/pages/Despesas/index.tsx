@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Paper, Toolbar } from "@mui/material";
+import { Box, Container, Grid, Paper, Toolbar, Typography } from "@mui/material";
 import { Breadcrumb, Copyright, Button, TabelaDespesa } from "../../components";
 import { Colors } from "../../assets/theme";
 import { useEffect, useState } from "react";
@@ -20,6 +20,35 @@ export default function Despesas() {
   useEffect(() => {
     setTags(getTags(despesas!));
   }, [despesas]);
+
+  const calculateTotalForMonth = () => {
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+
+    const totalForMonth = despesas?.reduce((total, despesa) => {
+      const despesaDate = new Date(despesa.date);
+      if (despesaDate.getMonth() + 1 === currentMonth && despesaDate.getFullYear() === currentYear) {
+        return total + despesa.amount;
+      }
+      return total;
+    }, 0);
+
+    return totalForMonth!.toFixed(2);
+  };
+
+  const calculateTotalForYear = () => {
+    const currentYear = new Date().getFullYear();
+
+    const totalForYear = despesas?.reduce((total, despesa) => {
+      const despesaDate = new Date(despesa.date);
+      if (despesaDate.getFullYear() === currentYear) {
+        return total + despesa.amount;
+      }
+      return total;
+    }, 0);
+
+    return totalForYear!.toFixed(2);
+  };
 
   const firstSection = () => {
     return (
@@ -62,26 +91,69 @@ export default function Despesas() {
         <Grid container spacing={3}>
           {firstSection()}
 
-          {[1, 2, 3].map((item, index) => (
-            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-              <Paper
-                style={{
-                  padding: '16px',
-                  marginBottom: '24px',
-                  border: `1px solid ${Colors.primary}`,
-                  borderRadius: '8px'
-                }}
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: 100,
-                }}
-              >
-                Valor Total das Despesas <br /> R$ 4.534,87
-              </Paper>
+          <Grid item xs={12}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Paper
+                  style={{
+                    padding: "16px",
+                    marginBottom: "24px",
+                    border: `1px solid ${Colors.primary}`,
+                    borderRadius: "8px",
+                  }}
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 100,
+                  }}
+                >
+                  <Typography variant="h6">Valor Total do Mês</Typography>
+                  <Typography>R$ {calculateTotalForMonth()}</Typography>
+                </Paper>
+              </Grid>
+
+              {/* <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Paper
+                  style={{
+                    padding: "16px",
+                    marginBottom: "24px",
+                    border: `1px solid ${Colors.primary}`,
+                    borderRadius: "8px",
+                  }}
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 100,
+                  }}
+                >
+                  <Typography variant="h6">Valor Total com Filtro</Typography>
+                  <Typography>R$ {calculateTotalForFilteredDespesas().toFixed(2)}</Typography>
+                </Paper>
+              </Grid> */}
+
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Paper
+                  style={{
+                    padding: "16px",
+                    marginBottom: "24px",
+                    border: `1px solid ${Colors.primary}`,
+                    borderRadius: "8px",
+                  }}
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 100,
+                  }}
+                >
+                  <Typography variant="h6">Valor Total no Ano</Typography>
+                  <Typography>R$ {calculateTotalForYear()}</Typography>
+                </Paper>
+              </Grid>
             </Grid>
-          ))}
+          </Grid>
 
           <Grid item xs={12}>
             <TabelaDespesa despesas={despesas} />
