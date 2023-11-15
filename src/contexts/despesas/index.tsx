@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Despesa } from '../../types';
 import { Endpoints, axiosInstance } from '../../api';
 
