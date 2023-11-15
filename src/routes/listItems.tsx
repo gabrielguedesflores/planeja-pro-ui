@@ -8,6 +8,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Link, useLocation } from 'react-router-dom';
 import { Receipt } from '@mui/icons-material';
+import { Colors } from '../assets/theme';
 
 const MainListItems = () => {
   const location = useLocation();
@@ -16,18 +17,18 @@ const MainListItems = () => {
 
   return (
     <React.Fragment>
-      <Link to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to="/dashboard" style={{ textDecoration: 'none', color: Colors.light, }}>
         <ListItemButton selected={isActive("/dashboard")}>
-          <ListItemIcon>
+          <ListItemIcon style={{ color: Colors.light, }}>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
       </Link>
 
-      <Link to="/despesas" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to="/despesas" style={{ textDecoration: 'none', color: Colors.light, }}>
         <ListItemButton selected={isActive("/despesas")}>
-          <ListItemIcon>
+          <ListItemIcon style={{ color: Colors.light, }}>
             <Receipt />
           </ListItemIcon>
           <ListItemText primary="Despesas" />

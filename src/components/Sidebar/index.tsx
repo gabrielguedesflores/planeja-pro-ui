@@ -3,7 +3,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MuiDrawer from '@mui/material/Drawer';
 import MainListItems, { secondaryListItems } from '../../routes/listItems';
 import { Divider, IconButton, Toolbar, styled } from '@mui/material';
-import { Fonts } from '../../assets/theme';
+import { Colors, Fonts } from '../../assets/theme';
 
 interface AppBarProps {
   open?: boolean;
@@ -19,6 +19,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       fontFamily: Fonts.font_family,
       whiteSpace: 'nowrap',
       width: drawerWidth,
+      backgroundColor: Colors.secondary,
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -50,7 +51,7 @@ const Sidebar = ({ open, toggleDrawer }: AppBarProps)  => {
           px: [1],
         }}
       >
-        <IconButton onClick={toggleDrawer}>
+        <IconButton onClick={toggleDrawer} style={{ color: Colors.light, }}>
           <ChevronLeftIcon />
         </IconButton>
       </Toolbar>
@@ -58,7 +59,6 @@ const Sidebar = ({ open, toggleDrawer }: AppBarProps)  => {
       <List component="nav">
         <MainListItems />
         <Divider sx={{ my: 1 }} />
-        {secondaryListItems}
       </List>
     </Drawer>
   );

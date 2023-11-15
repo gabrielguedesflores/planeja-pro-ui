@@ -93,11 +93,12 @@ export class Border {
 export class Colors {
   private constructor() {}
 
-  static primary = '#018B6A';
+  static primary = '#333440';
   static lightPrimary = '#129c8c';
   static lighterPrimary = '#bbf7f0';
   static hoverPrimary = '#0ca996';
-  static secondary = '#48D2A0';
+  static secondary = '#202123';
+  static third = '#444654';
   static danger = '#fe4b61';
   static alert = '#e4a220';
   static info = '#4497b8';

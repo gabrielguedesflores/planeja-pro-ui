@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Despesa } from '../../types';
 import { Endpoints, axiosInstance } from '../../api';
 
@@ -13,19 +13,8 @@ export interface DespesaContextType {
 export const GlobalDespesasContext = (): DespesaContextType => {
   const [despesas, setDespesas] = useState<Despesa[] | null>(null);
   const storage = window.sessionStorage.getItem('session');
+  const localDespesas = window.sessionStorage.getItem('despesas');
   let session: any;
-
-  if (storage) {
-    session = JSON.parse(storage);
-    console.log('[useAuthContext]', session);
-  }
-
-  useEffect(() => {
-    const localDespesas = window.sessionStorage.getItem('despesas');
-    if (localDespesas) {
-      setDespesas(JSON.parse(localDespesas));
-    }
-  }, []);
 
   const getDespesas = async () => {
     try {
@@ -38,6 +27,19 @@ export const GlobalDespesasContext = (): DespesaContextType => {
       console.error("Error fetching despesas:", error);
     }
   };
+
+  useEffect(() => {
+    if (storage) {
+      session = JSON.parse(storage);
+      console.log('[useAuthContext]', session);
+    }
+  
+    if (localDespesas) {
+      setDespesas(JSON.parse(localDespesas));
+    } else {
+      getDespesas();
+    }
+  }, []);
 
   const createDespesa = () => {};
 

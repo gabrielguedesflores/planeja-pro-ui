@@ -15,6 +15,8 @@ export default function Despesas() {
 
   useEffect(() => {
     getDespesas();
+    console.log('despesas', despesas);
+    
   }, []);
 
   useEffect(() => {
@@ -99,10 +101,10 @@ export default function Despesas() {
                     padding: "16px",
                     marginBottom: "24px",
                     border: `1px solid ${Colors.primary}`,
-                    borderRadius: "8px",
                   }}
                   sx={{
                     p: 2,
+                    borderRadius: 5,
                     display: "flex",
                     flexDirection: "column",
                     height: 100,
@@ -139,10 +141,10 @@ export default function Despesas() {
                     padding: "16px",
                     marginBottom: "24px",
                     border: `1px solid ${Colors.primary}`,
-                    borderRadius: "8px",
                   }}
                   sx={{
                     p: 2,
+                    borderRadius: 5,
                     display: "flex",
                     flexDirection: "column",
                     height: 100,

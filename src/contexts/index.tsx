@@ -2,12 +2,12 @@ import { createContext, useContext } from 'react';
 import { GlobalDespesasContext, DespesaContextType } from './despesas';
 import { AuthContextType, GlobalAuthContext } from './auth';
 
-export interface UBRContext {
+export interface InterfaceContext {
   despesas: DespesaContextType;
   auth: AuthContextType
 }
 
-export const GlobalContext = createContext<UBRContext>({} as UBRContext);
+export const GlobalContext = createContext<InterfaceContext>({} as InterfaceContext);
 
 interface GlobalContextProviderType {
   children: React.ReactNode;

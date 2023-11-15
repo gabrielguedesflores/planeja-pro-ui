@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Badge, IconButton, Menu, MenuItem } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
+import { useAuthContext } from '../../contexts';
 
 export default function Profile() {
+  const { logout } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -12,6 +14,11 @@ export default function Profile() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout();
+    redirect('/login');
   };
 
   return (
@@ -29,7 +36,7 @@ export default function Profile() {
       >
         <MenuItem onClick={handleMenuClose} component={Link} to="/perfil">Perfil</MenuItem>
         <MenuItem onClick={handleMenuClose} component={Link} to="/configuracoes">Configurações</MenuItem>
-        <MenuItem onClick={handleMenuClose} component={Link} to="/sair">Sair</MenuItem>
+        <MenuItem onClick={() => handleLogout()} component={Link} to="/login">Sair</MenuItem>
       </Menu>
     </div>
   );

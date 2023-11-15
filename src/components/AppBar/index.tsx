@@ -5,6 +5,8 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavBar } from './styles';
 import Profile from '../Profile';
+import { Title, TitleCard } from '..';
+import { Colors } from '../../assets/theme';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -39,7 +41,7 @@ export default function AppBar({ open, toggleDrawer }: AppBarProps) {
           noWrap
           sx={{ flexGrow: 1 }}
         >
-          Dashboard
+          <TitleCard variant="h5" color={Colors.light}>Dashboard</TitleCard>
         </Typography>
 
         {/* <ButtonSwitchTheme /> */}

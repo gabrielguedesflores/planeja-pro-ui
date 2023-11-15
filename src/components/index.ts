@@ -14,6 +14,7 @@ import InputTag from "./InputTag";
 import Modal from "./Modal";
 import Sidebar from "./Sidebar";
 import Title from "./Title";
+import TitleCard from "./TitleCard";
 
 export {
   AppBar,
@@ -25,6 +26,7 @@ export {
   ErrorComponent,
   Sidebar,
   Title,
+  TitleCard,
   InputLogin,
   InputCurrency,
   InputPassword,

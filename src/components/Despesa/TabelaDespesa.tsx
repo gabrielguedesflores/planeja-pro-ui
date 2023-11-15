@@ -99,7 +99,7 @@ export default function TabelaDespesa(despesas: any) {
   }, [despesas]);
 
   return (
-    <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+    <Paper sx={{ p: 2, display: "flex", flexDirection: "column", borderRadius: 5, }}>
       <Box
         display="flex"
         justifyContent="space-between"
