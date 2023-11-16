@@ -3,11 +3,10 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Link, useLocation } from 'react-router-dom';
-import { Receipt } from '@mui/icons-material';
+import { Assessment, ImportExport, Receipt, TrendingUp } from '@mui/icons-material';
 import { Colors } from '../assets/theme';
 
 const MainListItems = () => {
@@ -20,7 +19,7 @@ const MainListItems = () => {
       <Link to="/dashboard" style={{ textDecoration: 'none', color: Colors.light, }}>
         <ListItemButton selected={isActive("/dashboard")}>
           <ListItemIcon style={{ color: Colors.light, }}>
-            <DashboardIcon />
+            <DashboardCustomizeIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
@@ -32,6 +31,33 @@ const MainListItems = () => {
             <Receipt />
           </ListItemIcon>
           <ListItemText primary="Despesas" />
+        </ListItemButton>
+      </Link>
+
+      <Link to="/receitas" style={{ textDecoration: 'none', color: Colors.light, }}>
+        <ListItemButton disabled selected={isActive("/receitas")}>
+          <ListItemIcon style={{ color: Colors.light, }}>
+            <TrendingUp sx={{ color: 'var(--mui-palette-primary-contrastText)' }} />
+          </ListItemIcon>
+          <ListItemText primary="Receitas" />
+        </ListItemButton>
+      </Link>
+
+      <Link to="/importar-exportar" style={{ textDecoration: 'none', color: Colors.light, }}>
+        <ListItemButton disabled selected={isActive("/importar-exportar")}>
+          <ListItemIcon style={{ color: Colors.light, }}>
+            <ImportExport />
+          </ListItemIcon>
+          <ListItemText primary="Importar/Exportar" />
+        </ListItemButton>
+      </Link>
+
+      <Link to="/relatorios" style={{ textDecoration: 'none', color: Colors.light, }}>
+        <ListItemButton disabled selected={isActive("/relatorios")}>
+          <ListItemIcon style={{ color: Colors.light, }}>
+            <Assessment sx={{ color: 'var(--mui-palette-primary-contrastText)' }} />
+          </ListItemIcon>
+          <ListItemText primary="Relatórios" />
         </ListItemButton>
       </Link>
 

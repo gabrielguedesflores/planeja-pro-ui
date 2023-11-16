@@ -13,12 +13,14 @@ export default function Dashboard() {
   const { despesas } = useDespesaContext();
   const [loadingTotalMes, setLoadingTotalMes] = useState(false);
   const [totalForMonth, setTotalForMonth] = useState<number | null>(null);
+  const [loadingForMonth, setLoadingForMonth] = useState(false);
 
   console.log('despesas', despesas);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoadingTotalMes(true);
+      setLoadingForMonth(true);
       const currentMonth = new Date().getMonth() + 1;
       const currentYear = new Date().getFullYear();
 
@@ -32,6 +34,7 @@ export default function Dashboard() {
 
       setTotalForMonth(totalForMonth || 0);
       setLoadingTotalMes(false);
+      setLoadingForMonth(false);
     };
 
     fetchData();
@@ -53,7 +56,6 @@ export default function Dashboard() {
       }
     });
 
-    // Ordena a lista do mês mais atual para o mais antigo
     totalsByMonth.sort((a, b) => {
       const aDate = new Date(`${a.year}-${a.month}-01`);
       const bDate = new Date(`${b.year}-${b.month}-01`);
@@ -105,7 +107,6 @@ export default function Dashboard() {
               }}
             >
               <TitleCard variant="h5" color={Colors.third}>Visão Geral</TitleCard>
-
               <Table>
                 <TableHead>
                   <TableRow>
@@ -159,33 +160,11 @@ export default function Dashboard() {
           <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', borderRadius: 5, }}>
               <TitleCard variant="h5" color={Colors.third}>Próximas do vencimento</TitleCard>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Descrição</TableCell>
-                    <TableCell>Valor</TableCell>
-                    <TableCell>Pago</TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody
-                  sx={{
-                    maxHeight: 160,
-                    overflowY: 'auto',
-                  }}
-                >
-                  {getTotalByMonth().map((despesa: any) => (
-                    <TableRow key={despesa.month + '|' + despesa.total + '|' + despesa.year}>
-                      <TableCell>{despesa.month + ' / ' + despesa.year}</TableCell>
-                      <TableCell>R$ {despesa.total}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-                
-              </Table>
+              
             </Paper>
           </Grid>
         </Grid>
+
         <Copyright sx={{ pt: 4 }} />
       </Container>
     </Box>
