@@ -7,6 +7,8 @@ import { NavBar } from './styles';
 import Profile from '../Profile';
 import { Title, TitleCard } from '..';
 import { Colors } from '../../assets/theme';
+import { menuMapping } from '../../utils/menuMapping';
+import { useLocation } from 'react-router-dom';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -14,7 +16,13 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 export default function AppBar({ open, toggleDrawer }: AppBarProps) {
+  const location = useLocation();
 
+  const getCurrentPageTitle = () => {
+    const pathname: string = location.pathname.replace('/', '');
+    return Object.keys(menuMapping).includes(pathname) ? menuMapping[pathname] : '';
+  };
+  
   return (
     <NavBar position="absolute" open={open}>
       <Toolbar
@@ -41,7 +49,7 @@ export default function AppBar({ open, toggleDrawer }: AppBarProps) {
           noWrap
           sx={{ flexGrow: 1 }}
         >
-          <TitleCard variant="h5" color={Colors.light}>Dashboard</TitleCard>
+          <Typography variant="h6">{getCurrentPageTitle()}</Typography>
         </Typography>
 
         {/* <ButtonSwitchTheme /> */}

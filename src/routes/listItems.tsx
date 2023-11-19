@@ -34,34 +34,33 @@ const MainListItems = () => {
         </ListItemButton>
       </Link>
 
-      <Link to="/receitas" style={{ textDecoration: 'none', color: Colors.light, }}>
-        <ListItemButton disabled selected={isActive("/receitas")}>
+      {/* <Link to="/receitas" style={{ textDecoration: 'none', color: Colors.light, }}> */}
+        <ListItemButton disabled selected={isActive("/receitas")} style={{ textDecoration: 'none', color: Colors.light, }}>
           <ListItemIcon style={{ color: Colors.light, }}>
             <TrendingUp sx={{ color: 'var(--mui-palette-primary-contrastText)' }} />
           </ListItemIcon>
           <ListItemText primary="Receitas" />
         </ListItemButton>
-      </Link>
+      {/* </Link> */}
 
-      <Link to="/importar-exportar" style={{ textDecoration: 'none', color: Colors.light, }}>
-        <ListItemButton disabled selected={isActive("/importar-exportar")}>
+      {/* <Link to="/importar-exportar" style={{ textDecoration: 'none', color: Colors.light, }}> */}
+        <ListItemButton disabled selected={isActive("/importarExportar")} style={{ textDecoration: 'none', color: Colors.light, }}>
           <ListItemIcon style={{ color: Colors.light, }}>
             <ImportExport />
           </ListItemIcon>
           <ListItemText primary="Importar/Exportar" />
         </ListItemButton>
-      </Link>
+      {/* </Link> */}
 
-      <Link to="/relatorios" style={{ textDecoration: 'none', color: Colors.light, }}>
-        <ListItemButton disabled selected={isActive("/relatorios")}>
+      {/* <Link to="/relatorios" style={{ textDecoration: 'none', color: Colors.light, }}> */}
+        <ListItemButton disabled selected={isActive("/relatorios")} style={{ textDecoration: 'none', color: Colors.light, }}>
           <ListItemIcon style={{ color: Colors.light, }}>
             <Assessment sx={{ color: 'var(--mui-palette-primary-contrastText)' }} />
           </ListItemIcon>
           <ListItemText primary="Relatórios" />
         </ListItemButton>
-      </Link>
+      {/* </Link> */}
 
-      {/* ... e assim por diante para os outros links */}
     </React.Fragment>
   );
 }

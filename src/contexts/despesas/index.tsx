@@ -31,7 +31,6 @@ export const GlobalDespesasContext = (): DespesaContextType => {
   useEffect(() => {
     if (storage) {
       session = JSON.parse(storage);
-      console.log('[useAuthContext]', session);
     }
   
     if (localDespesas) {
