@@ -15,6 +15,7 @@ import Modal from "./Modal";
 import Sidebar from "./Sidebar";
 import Title from "./Title";
 import TitleCard from "./TitleCard";
+import UploadButton from "./UploadButton";
 
 export {
   AppBar,
@@ -33,5 +34,6 @@ export {
   InputTag,
   Modal,
   FiltroDespesa, 
-  TabelaDespesa
+  TabelaDespesa,
+  UploadButton
 }

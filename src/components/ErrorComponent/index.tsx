@@ -37,6 +37,7 @@ export default function ErrorComponent({ resetErrorBoundary, error }: any) {
               onClick={() => {
                 resetErrorBoundary();
               }}
+              text='Voltar'
             >
               Ok
             </Button>

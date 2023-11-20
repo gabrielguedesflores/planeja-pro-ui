@@ -12,13 +12,13 @@ import { LineChart, XAxis, YAxis, Tooltip, Legend, Line, ResponsiveContainer } f
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { ArrowBackIos, ArrowForwardIos, Remove, Add } from '@mui/icons-material';
+import { ArrowBackIos, ArrowForwardIos, Remove } from '@mui/icons-material';
 
 export default function Dashboard() {
   const { despesas } = useDespesaContext();
   const [loadingVisaoGeral, setLoadingVisaoGeral] = useState(false);
   const [loadingTotalMes, setLoadingTotalMes] = useState(false);
-  const [loadingTotalMesRelatorios, setLoadingTotalMesRelatorios] = useState(false); // Novo estado
+  const [loadingTotalMesRelatorios, setLoadingTotalMesRelatorios] = useState(false);
   const [totalForMonth, setTotalForMonth] = useState<any | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
 
@@ -317,6 +317,7 @@ export default function Dashboard() {
           </Grid>
 
         </Grid>
+        <Copyright sx={{ pt: 4 }} />
       </Container>
     </Box>
   );

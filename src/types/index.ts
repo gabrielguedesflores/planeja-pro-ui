@@ -23,9 +23,14 @@ export default class RoutesPaths {
   static despesas = '/despesas';
   static login = '/login';
   static cadastro = '/cadastro';
+  static perfil = '/perfil';
+  static configuracoes = '/configuracoes';
 }
 
 export interface Login {
   userEmail: string,
   userPassword: string
+}
+export class ErrorMessages {
+  static defaultError = 'Serviço indisponível. Tente novamente mais tarde.';
 }

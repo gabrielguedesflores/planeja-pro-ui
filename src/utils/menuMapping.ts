@@ -3,5 +3,7 @@ export const menuMapping = {
   despesas: 'Despesas',
   receita: 'Receitas',
   importarExportar: 'Importar/Exportar',
-  relatorios: 'Relatórios'
+  relatorios: 'Relatórios',
+  perfil: 'Perfil',
+  configuracoes: 'Configurações',
 };
