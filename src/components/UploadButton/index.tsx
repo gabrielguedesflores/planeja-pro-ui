@@ -5,6 +5,7 @@ import { ButtonContainer, List, UploadContainer } from './styles';
 import { createErrorMessage } from '../../utils';
 import { Colors } from '../../assets/theme';
 import Button from './Button';
+import { useAuthContext } from '../../contexts';
 
 const FILES_LIMIT = 8;
 const FORMAT_ACCEPTED = '.pdf,.jpeg,.jpg,.png';
@@ -16,7 +17,7 @@ enum FILE_SIZE {
 
 interface IUploadButtonProps {
   text?: string;
-  cpf: string;
+  cpf?: string;
   documentType: string;
   fileNames?: string[];
   document?: string;
@@ -33,9 +34,10 @@ const UploadButton = ({
   cpf,
   documentType,
   fileNames,
-  document,
   onChangeSuccess,
 }: IUploadButtonProps) => {
+  const { getSession } = useAuthContext();
+  let session = getSession();
   const inputFileRef = useRef<any>(null);
   const [files, setFiles] = useState<any>(fileNames ?? []);
   const [fileErrors, setFileErrors] = useState<any>([]);
@@ -51,7 +53,8 @@ const UploadButton = ({
         try {
           const file = getFile(item);
           if (file && file?.id === id) newFilesList.splice(index, 1);
-          await axiosInstance.delete(Endpoints.associacao.imagens(id, documentType));
+          // TODO: criar endpoint no bff para deletar uma imagem
+          // await axiosInstance.delete(Endpoints.associacao.imagens(id, documentType));
           setLoading(false);
         } catch (woof) {
           const error = createErrorMessage(woof);
@@ -86,23 +89,18 @@ const UploadButton = ({
       bodyFormData.append(
         'file',
         file,
-        encodeURIComponent(file?.name ?? `${documentType}.${file?.type.split('/')[1]}`),
-      );
-      bodyFormData.append('documento', document ?? 'OUTROS');
-
-      const response = await axiosInstance.post(
-        Endpoints.associacao.imagens(cpf, documentType, document, rascunho?.tipoAssociacao),
-        bodyFormData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data; charset=utf-8',
-          },
-        },
+        encodeURIComponent(`${session.user.id}.${file?.type.split('/')[1]}`),
       );
 
-      await updateFilesList(response?.data, file);
+      // TODO: o container que roda na vercel é apenas readonly, não conseguimos salvar arquivos.
+      // const response = await axiosInstance.post(
+      //   Endpoints.upload.post(session.user.id),
+      //   bodyFormData
+      // );
+
+      await updateFilesList(session.user.id, file);
       setLoadingButton(false);
-      return response?.data;
+      return true;
     } catch (woof) {
       const error = createErrorMessage(woof);
       setLoadingButton(false);
@@ -126,8 +124,7 @@ const UploadButton = ({
               ...file,
               error: `Identificamos que o arquivo ${name} possui mais que o limite permitido(3MB).
               Considere comprimir o documento para reduzir seu tamanho e, assim,
-              termos um processo de alta performance em suas integrações.
-              Em breve teremos um compressor diretamente na plataforma`,
+              termos um processo de alta performance em suas integrações.`,
             });
             await handleSetErrors(newFileList);
           } else {
@@ -241,6 +238,8 @@ const UploadButton = ({
         accept={FORMAT_ACCEPTED}
         data-testid='upload-input'
       />
+
+      O upload de imagens esta fora do ar no momento.
     </>
   );
 };

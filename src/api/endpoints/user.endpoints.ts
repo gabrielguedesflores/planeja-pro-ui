@@ -8,4 +8,8 @@ export class UserEndpoints extends AbstractEndpoints {
     return `${this.getURL()}/${id}`;
   }
 
+  put(id: string) {
+    return `${this.getURL()}/${id}`;
+  }
+
 }

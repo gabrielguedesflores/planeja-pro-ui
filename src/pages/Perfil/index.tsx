@@ -9,25 +9,29 @@ import { useEffect, useMemo, useState } from 'react';
 import { Button, Copyright, InputPassword, TitleCard, UploadButton } from '../../components';
 import FadeIn from 'react-fade-in';
 import { Colors } from '../../assets/theme';
+import { Endpoints, axiosInstance } from '../../api';
 
-export default function Dashboard() {
+export default function Perfil() {
   const { getSession } = useAuthContext();
+  const [id, setId] = useState('');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [imagemPerfil, setImagemPerfil] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingSaveButton, setLoadingSaveButton] = useState(false);
   let session;
 
   useEffect(() => {
     setLoading(true);
     session = getSession();
     console.log('session', session);
+    setId(session.user.id);
     setNome(session.user.name);
     setEmail(session.user.email);
     setImagemPerfil(session.user.profileImage);
     setLoading(false);
-  });
+  }, []);
 
   const UploadComponent = useMemo(() => {
     return (props: any) => (
@@ -36,6 +40,29 @@ export default function Dashboard() {
       </FadeIn>
     );
   }, []);
+
+  const handleSave = async () => {
+    try {
+      setLoadingSaveButton(true);
+  
+      const updateUser = {
+        userName: nome,
+        userEmail: email,
+        role: "user",
+        profileImage: "",
+        userDateLastUpdated: new Date().toISOString(),
+      };
+  
+      await axiosInstance.put(Endpoints.user.put(id), updateUser);
+  
+      setLoadingSaveButton(false);
+      // TODO: Atualizar a session storage com novos dados do usuário
+    } catch (error) {
+      console.error('Erro ao salvar o usuário:', error);
+      setLoadingSaveButton(false);
+      throw error;
+    }
+  };
 
   return (
     <Box
@@ -111,6 +138,7 @@ export default function Dashboard() {
                           onChangeSuccess={(filesName: string[]) => {
                             setImagemPerfil(filesName);
                           }}
+                          er
                         />
                       </Grid>
                     </Grid>
@@ -120,7 +148,8 @@ export default function Dashboard() {
                       buttonColor={Colors.primary}
                       variant="contained"
                       style={{ float: "right" }}
-                    // onClick={handleOpen}
+                      loading={loadingSaveButton}
+                      onClick={() => handleSave()}
                     />
                   </Container>
                 </>
